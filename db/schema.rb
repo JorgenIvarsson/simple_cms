@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 2018_09_08_084855) do
   create_table "pages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "subject_id"
     t.string "name"
-    t.integer "permalink"
+    t.string "permalink"
     t.boolean "position"
     t.boolean "visible", default: false
     t.datetime "created_at", null: false
