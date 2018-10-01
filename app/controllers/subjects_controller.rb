@@ -25,15 +25,30 @@ class SubjectsController < ApplicationController
   end
 
   def edit
+    @subject = Subject.find(params[:id])
   end
 
   def update
+    #subject_params is a local private metod for whitelisting and require params.
+    @subject = Subject.find(params[:id])
+
+    if @subject.update_attributes(subject_params)
+        # if subject saved redirect to show action.
+      redirect_to(subject_path(@subject))
+    else
+      # If save fails, just render the Edit template with the same @subject
+      render('edit')
+    end
   end
 
   def delete
+    @subject = Subject.find(params[:id])
   end
 
   def destroy
+    @subject = Subject.find(params[:id])
+    @subject.destroy
+    redirect_to(subjects_path)
   end
 
   private
