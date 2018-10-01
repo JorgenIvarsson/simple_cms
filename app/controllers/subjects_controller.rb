@@ -17,6 +17,7 @@ class SubjectsController < ApplicationController
     @subject = Subject.new(subject_params)
     # if subject saved redirect to subjects list
     if @subject.save
+      flash[:notice] = "Subject created successfully."
       redirect_to(subjects_path)
     else
       # If save fails, just render the New template with the same @subject
@@ -34,6 +35,7 @@ class SubjectsController < ApplicationController
 
     if @subject.update_attributes(subject_params)
         # if subject saved redirect to show action.
+      flash[:notice] = "Subject updated successfully."
       redirect_to(subject_path(@subject))
     else
       # If save fails, just render the Edit template with the same @subject
@@ -48,6 +50,7 @@ class SubjectsController < ApplicationController
   def destroy
     @subject = Subject.find(params[:id])
     @subject.destroy
+    flash[:notice] = "Subject '#{@subject.name}' destroyed successfully."
     redirect_to(subjects_path)
   end
 
