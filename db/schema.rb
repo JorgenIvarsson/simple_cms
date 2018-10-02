@@ -33,7 +33,7 @@ ActiveRecord::Schema.define(version: 2018_09_29_204422) do
     t.integer "subject_id"
     t.string "name"
     t.string "permalink"
-    t.boolean "position"
+    t.integer "position"
     t.boolean "visible", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
