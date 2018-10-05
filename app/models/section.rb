@@ -16,7 +16,7 @@ class Section < ApplicationRecord
   CONTENT_TYPES = ['Text', 'HTML']
 
   validates_presence_of :name
-  validates_lenght_of :name, :maximum => 255
+  validates_length_of :name, :maximum => 255
   validates_inclusion_of :content_type, :in => CONTENT_TYPES,
   :message => "Must be one of #{CONTENT_TYPES.join(', ')}"
   validates_presence_of :content
