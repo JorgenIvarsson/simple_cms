@@ -10,16 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_29_204422) do
+ActiveRecord::Schema.define(version: 2018_10_06_171917) do
 
   create_table "admin_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "first_name", limit: 25
     t.string "last_name", limit: 50
     t.string "email", limit: 100, default: "", null: false
     t.string "username", limit: 25
-    t.string "hashed_password", limit: 40
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "password_digest"
     t.index ["username"], name: "index_admin_users_on_username"
   end
 
