@@ -8,6 +8,12 @@ class Subject < ApplicationRecord
   scope :newest_first, lambda { order("created_at DESC") }
   scope :search, lambda { |query| where(["name LIKE ?", "%#{query}%"]) }
 
-  validates_presence_of :name
-  validates_length_of :name, :maximum => 255
+  # Long style validations
+  # validates_presence_of :name
+  # validates_length_of :name, :maximum => 255
+
+  # "sexy validations"
+  validates :name, :presence => true,
+                   :length => { :maximum => 255 }
+
 end
