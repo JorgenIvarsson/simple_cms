@@ -1,11 +1,14 @@
 class AdminUser < ApplicationRecord
   has_secure_password
-  
+
   has_and_belongs_to_many :pages
   has_many :section_edits
   # Added rich associations. Relationship "has_many through" lets us use connection like
   # "admin_user.sections"
   has_many :sections, :through => :section_edits
+
+  scope :sorted, lambda { order("last_name ASC, first_name ASC") }
+
 
   EMAIL_REGEX = /\A[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}\Z/i
   # Long for validations
@@ -33,4 +36,10 @@ class AdminUser < ApplicationRecord
                     :length => { :maximum => 100 },
                     :format => EMAIL_REGEX,
                     :confirmation => true
+
+  # Class method for returning AdminUser full name
+  def name
+    [first_name, last_name].join(' ')
+  end
+
 end
