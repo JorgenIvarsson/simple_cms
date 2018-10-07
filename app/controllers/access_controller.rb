@@ -1,6 +1,9 @@
 class AccessController < ApplicationController
 
   layout 'admin'
+
+  before_action :confirm_logged_in, :except => [:login, :attempt_login, :logout]
+
   def menu
     # Display text and links
   end
