@@ -1,0 +1,30 @@
+<% @page_title = "All Admin users"  %>
+
+<%= link_to("Back to menu", { controller: 'access', action:'menu'}, :class => 'back-link') %>
+
+<div class="subjects index">
+  <h2>Admin users</h2>
+
+  <%= link_to("Add new admin user", new_admin_user_path, :class => 'action_new') %>
+
+  <table class="listing" summary="Admin user list">
+    <tr class="header">
+      <th>Last Name</th>
+      <th>First name</th>
+      <th>Email</th>
+      <th>Username</th>
+    </tr>
+    <% @admin_users.each do |admin_user| %>
+    <tr>
+      <td><%= admin_user.last_name %></td>
+      <td><%= admin_user.first_name %></td>
+      <td><%= admin_user.email %></td>
+      <td><%= admin_user.username %></td>
+      <td class="actions">
+        <%= link_to("Edit", edit_admin_user_path(admin_user), :class => 'action edit') %>
+        <%= link_to("Delete", delete_admin_user_path(admin_user), :class => 'action delete') %>
+      </td>
+    </tr>
+    <% end %>
+  </table>
+</div>

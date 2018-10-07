@@ -1,0 +1,16 @@
+<% @page_title = "Create Admin user"  %>
+
+<%= link_to("Back to list", admin_users_path, :class => 'back-link') %>
+
+<div class="admin_user new">
+  <h2>Create Admin User</h2>
+
+  <%= form_for(@admin_user) do |f| %>
+  <!-- When a partial needs a variable, we have to send it to the partial -->
+  <%= render(:partial => 'form', :locals => {:f => f}) %>
+
+  <div class="form-buttons">
+    <%= f.submit("Create admin user") %>
+  </div>
+  <% end %>
+</div>
