@@ -41,6 +41,7 @@ class AdminUser < ApplicationRecord
   # Class method for returning AdminUser full name
   def name
     [first_name, last_name].join(' ')
+    # "#{first_name} {last_name}" also works.
   end
 
 end

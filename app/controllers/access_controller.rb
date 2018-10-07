@@ -5,6 +5,8 @@ class AccessController < ApplicationController
   before_action :confirm_logged_in, :except => [:login, :attempt_login, :logout]
 
   def menu
+    # showing name of logged in user on admin page
+    @logged_in_user = AdminUser.find(session[:user_id]).name
     # Display text and links
   end
 
