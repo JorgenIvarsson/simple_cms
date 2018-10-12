@@ -1,7 +1,8 @@
 class PagesController < ApplicationController
 
-  before_action :find_subject
   before_action :confirm_logged_in
+  before_action :find_subject
+  before_action :set_page_count, :only => [:new, :create, :edit, :update]
 
   layout 'admin'
 
@@ -15,7 +16,6 @@ class PagesController < ApplicationController
 
   def new
     @page = Page.new(:subject_id => @subject.id)
-    @page_count = Page.count + 1
     @subjects = Subject.sorted
   end
 
@@ -26,7 +26,6 @@ class PagesController < ApplicationController
       flash[:notice] = "Page created successfully."
       redirect_to(pages_path(:subject_id => @subject.id))
     else
-      @page_count = Page.count + 1
       @subjects = Subject.sorted
       render('new')
     end
@@ -34,7 +33,6 @@ class PagesController < ApplicationController
 
   def edit
     @page = Page.find(params[:id])
-    @page_count = Page.count
     @subjects = Subject.sorted
   end
 
@@ -47,7 +45,6 @@ class PagesController < ApplicationController
       redirect_to(page_path(@page, :subject_id => @subject.id))
     else
       # if save fails render template for edit.
-      @page_count = Page.count
       @subjects = Subject.sorted
       render('edit')
     end
@@ -73,4 +70,12 @@ class PagesController < ApplicationController
   def find_subject
     @subject = Subject.find(params[:subject_id])
   end
+
+  def set_page_count
+    @page_count = @subject.pages.count
+    if params[:action] == 'new' || params[:action] == 'create'
+      @page_count += 1
+    end
+  end
+
 end
