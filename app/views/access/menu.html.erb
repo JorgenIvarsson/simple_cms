@@ -1,7 +1,7 @@
 <% @page_title = "Admin menu" %>
 <div class="menu">
   <h2>Admin menu</h2>
-  <div class="identity">Logged in as: <%= @logged_in_user %></div>
+  <div class="identity">Logged in as: <%= @username %></div>
   <ul>
     <li><%= link_to("Manage Subjects", subjects_path) %></li>
     <li><%= link_to("Manage Pages", pages_path) %></li>
