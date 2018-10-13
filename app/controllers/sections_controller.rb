@@ -1,11 +1,14 @@
 class SectionsController < ApplicationController
 
+  before_action :find_page
+  before_action :find_subject
   before_action :confirm_logged_in
+  before_action :set_section_count, :only => [:new, :create, :edit, :update]
 
   layout 'admin'
 
   def index
-    @sections = Section.sorted
+    @sections = @page.sections.sorted
   end
 
   def show
@@ -13,8 +16,7 @@ class SectionsController < ApplicationController
   end
 
   def new
-    @section = Section.new
-    @section_count = Section.count + 1
+    @section = Section.new(:page_id => @page.id)
     @pages = Page.sorted
   end
 
@@ -22,9 +24,8 @@ class SectionsController < ApplicationController
     @section = Section.new(section_params)
     if @section.save
       flash[:notice] = flash[:notice] = "Section created successfully."
-      redirect_to(sections_path)
+      redirect_to(sections_path(:page_id => @page.id, :subject_id => @subject.id))
     else
-      @section_count = Section.count + 1
       @pages = Page.sorted
       render('new')
     end
@@ -32,7 +33,6 @@ class SectionsController < ApplicationController
 
   def edit
     @section = Section.find(params[:id])
-    @section_count = Section.count
     @pages = Page.sorted
   end
 
@@ -40,9 +40,8 @@ class SectionsController < ApplicationController
     @section = Section.find(params[:id])
     if @section.update_attributes(section_params)
       flash[:notice] = flash[:notice] = "Section updated successfully."
-      redirect_to(section_path(@section))
+      redirect_to(section_path(@section, :page_id => @page.id,:subject_id => @subject.id))
     else
-      @section_count = Section.count
       @pages = Page.sorted
       render('edit')
     end
@@ -56,12 +55,27 @@ class SectionsController < ApplicationController
     @section = Section.find(params[:id])
     @section.destroy
     flash[:notice] = "Section deleted successfully."
-    redirect_to(sections_path)
+    redirect_to(sections_path(:page_id => @page.id, :subject_id => @subject.id))
   end
 
   private
   # Whitelisting params to be mass assigned to an object. Also setting required to param subject
   def section_params
     params.required(:section).permit(:name, :position, :visible, :page_id, :content, :content_type)
+  end
+
+  def find_page
+    @page = Page.find(params[:page_id])
+  end
+
+  def find_subject
+    @subject = Subject.find(params[:subject_id])
+  end
+
+  def set_section_count
+    @section_count = @page.sections.count
+    if params[:action] == 'new' || params[:action] == 'create'
+      @section_count += 1
+    end
   end
 end

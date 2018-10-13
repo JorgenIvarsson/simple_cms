@@ -1,5 +1,7 @@
 class Section < ApplicationRecord
 
+  acts_as_list :scope => :page
+
   belongs_to :page
   has_many :section_edits
   # Added rich associations. Relationship "has_many through" lets us use connection like
