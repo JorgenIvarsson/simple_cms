@@ -1,11 +1,11 @@
 <% @page_title = "Edit Section"  %>
 
-<%= link_to("Back to list", sections_path(:page_id => @page.id, :subject_id => @subject.id), :class => 'back-link') %>
+<%= link_to("Back to list", sections_path(:page_id => @page.id), :class => 'back-link') %>
 
 <div class="sections edit">
   <h2>Update Section</h2>
 
-  <%= form_for(@section, :url => section_path(@section, :page_id => @page.id, :subject_id => @subject.id)) do |f| %>
+  <%= form_for(@section, :url => section_path(@section, :page_id => @page.id)) do |f| %>
 
   <!-- When a partial needs a variable, we have to send it to the partial -->
   <%= render(:partial => 'form', :locals => {:f => f}) %>

@@ -16,24 +16,22 @@ class PagesController < ApplicationController
 
   def new
     @page = Page.new(:subject_id => @subject.id)
-    @subjects = Subject.sorted
   end
 
   def create
     @page = Page.new(page_params)
+    @page.subject = @subject
     #page_params is a local private metod for whitelisting and require params.
     if @page.save
       flash[:notice] = "Page created successfully."
       redirect_to(pages_path(:subject_id => @subject.id))
     else
-      @subjects = Subject.sorted
       render('new')
     end
   end
 
   def edit
     @page = Page.find(params[:id])
-    @subjects = Subject.sorted
   end
 
   def update
@@ -45,7 +43,6 @@ class PagesController < ApplicationController
       redirect_to(page_path(@page, :subject_id => @subject.id))
     else
       # if save fails render template for edit.
-      @subjects = Subject.sorted
       render('edit')
     end
   end
@@ -64,7 +61,7 @@ class PagesController < ApplicationController
   private
   # Whitelisting params to be mass assigned to an object. Also setting required to param :page
   def page_params
-    params.required(:page).permit(:name, :position, :visible, :subject_id, :permalink)
+    params.required(:page).permit(:name, :position, :visible, :permalink)
   end
 
   def find_subject

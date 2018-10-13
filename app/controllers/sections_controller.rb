@@ -1,7 +1,6 @@
 class SectionsController < ApplicationController
 
   before_action :find_page
-  before_action :find_subject
   before_action :confirm_logged_in
   before_action :set_section_count, :only => [:new, :create, :edit, :update]
 
@@ -17,16 +16,15 @@ class SectionsController < ApplicationController
 
   def new
     @section = Section.new(:page_id => @page.id)
-    @pages = Page.sorted
   end
 
   def create
     @section = Section.new(section_params)
+    @section.page = @page
     if @section.save
       flash[:notice] = flash[:notice] = "Section created successfully."
-      redirect_to(sections_path(:page_id => @page.id, :subject_id => @subject.id))
+      redirect_to(sections_path(:page_id => @page.id))
     else
-      @pages = Page.sorted
       render('new')
     end
   end
@@ -40,9 +38,8 @@ class SectionsController < ApplicationController
     @section = Section.find(params[:id])
     if @section.update_attributes(section_params)
       flash[:notice] = flash[:notice] = "Section updated successfully."
-      redirect_to(section_path(@section, :page_id => @page.id,:subject_id => @subject.id))
+      redirect_to(section_path(@section, :page_id => @page.id))
     else
-      @pages = Page.sorted
       render('edit')
     end
   end
@@ -55,21 +52,17 @@ class SectionsController < ApplicationController
     @section = Section.find(params[:id])
     @section.destroy
     flash[:notice] = "Section deleted successfully."
-    redirect_to(sections_path(:page_id => @page.id, :subject_id => @subject.id))
+    redirect_to(sections_path(:page_id => @page.id))
   end
 
   private
   # Whitelisting params to be mass assigned to an object. Also setting required to param subject
   def section_params
-    params.required(:section).permit(:name, :position, :visible, :page_id, :content, :content_type)
+    params.required(:section).permit(:name, :position, :visible, :content, :content_type)
   end
 
   def find_page
     @page = Page.find(params[:page_id])
-  end
-
-  def find_subject
-    @subject = Subject.find(params[:subject_id])
   end
 
   def set_section_count
