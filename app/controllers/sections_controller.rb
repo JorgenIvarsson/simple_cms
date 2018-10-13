@@ -67,6 +67,7 @@ class SectionsController < ApplicationController
   def find_page
     @page = Page.find(params[:page_id])
   end
+
   def find_subject
     @subject = Subject.find(params[:subject_id])
   end
