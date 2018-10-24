@@ -7,7 +7,7 @@
   </tr>
   <tr>
     <th>Position</th>
-    <td><%= f.select(:position, 1..@page_count) %></td>
+    <td><%= f.select(:position, 1..@page_count,:selected => @page_count) %></td>
   </tr>
   <tr>
     <th>Visible</th>
