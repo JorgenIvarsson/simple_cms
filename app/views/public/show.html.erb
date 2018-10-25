@@ -6,7 +6,7 @@
 <div class="section">
   <% case section.content_type %>
   <% when 'HTML' %>
-   <%= raw(sanitize(section.content, :tags => ['strong', 'em', 'a'])) %>
+   <%= raw(sanitize(section.content, :tags => ['strong', 'em', 'a','h3','h4'])) %>
   <% when 'Text' %>
     <%= simple_format(section.content) %>
   <% end %>
