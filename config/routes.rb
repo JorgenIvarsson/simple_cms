@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   root :to => 'public#index'
 
   get 'show/:permalink', :to => 'public#show', :as => 'public_show'
+  get 'show/', :to => 'public#index'
 
   get 'admin', :to => 'access#menu'
   get 'access/menu'
